@@ -23,6 +23,13 @@ window.scrollTo(0,1);
 <script src="{{URL::asset('style/js/jquery-1.11.1.min.js')}}"></script>
 <!--start-smoth-scrolling-->
 
+<style type="text/css">
+	#inner {
+	  width: 90%;
+	  margin: 0 auto;
+    }
+</style>
+
 </head>
   <body>
 
@@ -85,7 +92,7 @@ window.scrollTo(0,1);
     </nav>
 
 
-             <div class="col-sm-3 col-md-2 sidebar" style="background: #FFFF!important;">
+             <div class="col-sm-3 col-md-2 sidebar">
 			
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
@@ -94,14 +101,7 @@ window.scrollTo(0,1);
 					<li><a href="history.html" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Categories</a></li>
 					
 					<div class="side-bottom">
-						<div class="side-bottom-icons">
-							<ul class="nav2">
-								<li><a href="#" class="facebook"> </a></li>
-								<li><a href="#" class="facebook twitter"> </a></li>
-								<li><a href="#" class="facebook chrome"> </a></li>
-								<li><a href="#" class="facebook dribbble"> </a></li>
-							</ul>
-						</div>
+						
 						<div class="copyright">
 							<p>Copyright © 2015 My Play. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
 						</div>
