@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/add_configurations', function () {
+    return view('adminPages.addConfigurations');
+})->name('addConfig');
+
+Route::post('/add', 'ConfigsController@store');
+
+

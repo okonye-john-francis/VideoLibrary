@@ -39,6 +39,10 @@
             float: right;
             margin-right: 20px;
         }
+        #notification{
+            width: 90%;
+            margin: auto;
+        }
     </style>
 
 </head>
@@ -104,6 +108,9 @@
                     </li>
                     <li class="list-group-item">
                         <a href="#"><i class="fa fa-dashboard fa-fw"></i> All movies</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/add_configurations"><i class="fa fa-dashboard fa-fw"></i> Configuration Settings</a>
                     </li>
                    
                     
