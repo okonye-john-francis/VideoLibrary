@@ -28,6 +28,17 @@ window.scrollTo(0,1);
 	  width: 90%;
 	  margin: 0 auto;
     }
+    .img_size{
+    	height: 150px;
+    }
+
+    .left {
+		box-shadow: 3px 0 5px -5px #333;
+	}
+	.mgn{
+		margin-bottom: 10px;
+	}
+box left
 </style>
 
 </head>
@@ -43,8 +54,11 @@ window.scrollTo(0,1);
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="index.html"><h1><img src="images/logo.png" alt="" /></h1></a>
+
         </div>
+       
         <div id="navbar" class="navbar-collapse collapse">
+		
 			<div class="top-search">
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search...">
@@ -52,6 +66,18 @@ window.scrollTo(0,1);
 				</form>
 			</div>  
 			<div class="header-top-right">
+
+
+				<div class="file">
+					<a href="">					
+					<img src="{{URL::asset('images/cart2.png')}}" style="height: 28px;" />&nbsp&nbsp
+                    @guest
+                    (0)
+                    @else
+					({{$current_cart}})
+					@endguest
+					</a>		
+				</div>
 				
 				<div class="signin">
 					@guest
@@ -92,7 +118,7 @@ window.scrollTo(0,1);
     </nav>
 
 
-             <div class="col-sm-3 col-md-2 sidebar">
+             <div class="col-sm-3 col-md-2 sidebar left">
 			
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
@@ -103,7 +129,7 @@ window.scrollTo(0,1);
 					<div class="side-bottom">
 						
 						<div class="copyright">
-							<p>Copyright © 2015 My Play. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+							
 						</div>
 					</div>
 				</div>
@@ -130,5 +156,61 @@ window.scrollTo(0,1);
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{URL::asset('style/js/bootstrap.min.js')}}"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+
+
+    <script>
+
+		$(document).ready(function() {
+		$('.popup-with-zoom-anim').magnificPopup({
+			type: 'inline',
+			fixedContentPos: false,
+			fixedBgPos: true,
+			overflowY: 'auto',
+			closeBtnInside: true,
+			preloader: false,
+			midClick: true,
+			removalDelay: 300,
+			mainClass: 'my-mfp-zoom-in'
+		});
+																		
+		});
+    </script>
+
+    @guest
+
+    @else
+
+    <script type="text/javascript">
+    	$('#cart').on('click', function(){
+    		var video = document.getElementById('video').value;
+             $.ajax({ 
+                type: "POST",
+                url: "http:/localhost:8000/addToCart?activeUser={{Auth::user()->id}}&vId="+video, 
+                success: function(response){ 
+                        alert("added"); 
+                } 
+            });
+    	});
+
+    	
+    </script>
+
+    <script type="text/javascript">
+
+    	$('#order').on('mouseenter', function(){
+    		
+    		var unitPrice = document.getElementById('unitPrice').value;
+    		var quantity = document.getElementById('quantity').value;
+
+    		document.getElementById('price').value = (quantity*unitPrice);
+            
+    	});
+
+    	
+    </script>
+
+    @endguest	
+
+
   </body>
 </html>

@@ -14,11 +14,13 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('order_id');
+            $table->increments('id');
             $table->integer('video_ordered');
-            $table->foreign('video_ordered')->references('video_id')->on('video');
+            $table->foreign('video_ordered')->references('id')->on('video');
             $table->integer('ordered_by');
             $table->foreign('ordered_by')->references('id')->on('users');
+            $table->string('contact');
+            $table->string('address');
             $table->integer('quantity');
             $table->decimal('price');
             $table->string('remarks')->nullable();
@@ -34,6 +36,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 }

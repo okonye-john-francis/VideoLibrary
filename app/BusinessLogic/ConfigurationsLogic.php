@@ -4,6 +4,7 @@ namespace App\BusinessLogic;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Config;
+use App\Genre;
 
 
 class ConfigurationsLogic
@@ -17,7 +18,7 @@ class ConfigurationsLogic
      *
      * @return \Illuminate\Http\Response
      */
-    public function addConfiguration($request)
+    public function addPriceConfiguration($request)
     {
 
         $this->validate($request, [
@@ -25,12 +26,36 @@ class ConfigurationsLogic
           'config_value'  => 'required',
         ]);
 
-        $config= new Config([
+        $config=Config::create([
           'config_key'    => $request->config_key,
           'config_value'  => $request->config_value,
         ]);
 
-        $config->save();
+        return [
+            'config' => $config,
+            'success' => true,
+            'err_msg' => null
+        ];
+
+    }
+
+
+    public function addGenre($request)
+    {
+
+        $this->validate($request, [
+          'category'    => 'required'
+        ]);
+
+        $config=Genre::create([
+          'category'    => $request->category,
+        ]);
+
+        return [
+            'config' => $config,
+            'success' => true,
+            'err_msg' => null
+        ];
 
     }
 

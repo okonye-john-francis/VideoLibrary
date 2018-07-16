@@ -15,7 +15,7 @@ class ConfigsController extends Controller
      */
     public function index()
     {
-        //
+        return view('adminPages.configurationSettings');
     }
 
     /**
@@ -30,7 +30,7 @@ class ConfigsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     *v
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -39,11 +39,10 @@ class ConfigsController extends Controller
         
         $config = new ConfigurationsLogic;
         
-        $config->addConfiguration($request);
+        $returned_value = $config->addPriceConfiguration($request);
 
-        return redirect()
-               ->route('addConfig')
-               ->with('success', 'Configuration saved Successfully');
+        return redirect()->route('priceConfig')
+               ->with('success', 'Price Configuration saved Successfully');
 
     }
 
@@ -91,4 +90,18 @@ class ConfigsController extends Controller
     {
         //
     }
+
+    public function addGenre(Request $request){
+ 
+        $config = new ConfigurationsLogic;
+        
+        $returned_value = $config->addGenre($request);
+         
+        return redirect()->route('genreConfig')
+               ->with('success', 'Genre Successfully Added');
+
+    }
+
+
+
 }

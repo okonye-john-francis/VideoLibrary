@@ -104,13 +104,13 @@
                         <a href="#"><i class="fa fa-dashboard fa-fw"></i> Orders</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i> Add Movie</a>
+                        <a href="{{route('movies.index')}}"><i class="fa fa-dashboard fa-fw"></i> Add Movie</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i> All movies</a>
+                        <a href="/allMovies"><i class="fa fa-dashboard fa-fw"></i> All movies</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="/add_configurations"><i class="fa fa-dashboard fa-fw"></i> Configuration Settings</a>
+                        <a href="{{route('configurations.index')}}"><i class="fa fa-dashboard fa-fw"></i> Configuration Settings</a>
                     </li>
                    
                     
@@ -183,14 +183,16 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-    $("#endDate").change(function(){
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-        $.ajax({url: "/transactionRange?lower_limit="+startDate+"&upper_limit="+endDate, success: function(result){
-            $("#transactionRange").html(result);
-        }});
-    });
+
+$("#dropdownID").on('change', function() {
+    if ($(this).val() == 'pricing'){
+        event.preventDefault();
+        document.getElementById('pricing-form').submit();
+                    
+    } else if($(this).val() == 'genre') {
+        event.preventDefault();
+        document.getElementById('genre-form').submit();
+    }
 });
 
 </script>

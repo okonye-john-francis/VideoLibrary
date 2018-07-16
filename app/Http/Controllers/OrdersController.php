@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BusinessLogic\OrdersLogic;
+use App\BusinessLogic\VideosLogic;
 
 class OrdersController extends Controller
 {
@@ -81,4 +83,52 @@ class OrdersController extends Controller
     {
         //
     }
+
+    public function addToCart(Request $request){
+
+        $ordersLogic = new OrdersLogic;
+
+        $video_logic = new VideosLogic;
+
+        $returned_value = $ordersLogic->saveSelectedProductToCart($request);
+
+        $returned_value = $video_logic->clientHomePageDisplay();
+
+        $current_movies = $returned_value['movies'];
+
+        $current_cart   = $returned_value['cart'];
+
+        return view('ClientPages.home', compact('current_movies','current_cart'));
+
+    }
+
+
+    public function processOrder(Request $request){
+
+        $video_logic = new VideosLogic;
+
+        $returned_value = $video_logic->fetchSelectedMovieDetails($request->vId);
+
+        $returned_value2 = $video_logic->clientHomePageDisplay();
+
+        $current_cart   = $returned_value2['cart'];
+
+        return view('ClientPages.placeOrder', compact('returned_value','current_cart')); 
+
+
+    }
+
+
+    public function completeOrder(Request $request){
+
+        $ordersLogic = new OrdersLogic;
+
+        $placedOrder =  $ordersLogic->saveOrder($request);
+
+    }
+
+
+
+
+
 }

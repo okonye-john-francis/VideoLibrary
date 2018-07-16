@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Genre extends Model
 {
     protected $guarded = [
          'id',

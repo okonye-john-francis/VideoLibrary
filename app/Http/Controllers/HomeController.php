@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\BusinessLogic\VideosLogic;
 use Auth;
 
 class HomeController extends Controller
@@ -29,7 +30,16 @@ class HomeController extends Controller
            return view('adminPages.home');
        }
        else {
-           return view('ClientPages.home');
+     
+           $video_logic    = new VideosLogic;
+
+           $returned_value = $video_logic->clientHomePageDisplay();
+
+           $current_movies = $returned_value['movies'];
+
+           $current_cart   = $returned_value['cart'];
+
+           return view('ClientPages.home', compact('current_movies','current_cart'));
        }
         
     }

@@ -11,18 +11,42 @@
 |
 */
 
-Route::get('/', function () {
-    return view('ClientPages.home');
-});
+Route::get('/', 'VideosController@guestHomeDisplay');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/add_configurations', function () {
-    return view('adminPages.addConfigurations');
-})->name('addConfig');
+Route::resource('movies','VideosController');
 
-Route::post('/add', 'ConfigsController@store');
+Route::resource('configurations', 'ConfigsController');
+
+Route::post('/priceConfiguration', function (){
+    return view('adminPages.priceConfigurations');
+});
+
+Route::get('/priceConfiguration', function (){
+    return view('adminPages.priceConfigurations');
+})->name('priceConfig');
+
+Route::post('/genreConfiguration', function (){
+    return view('adminPages.genreConfigurations');
+});
+
+Route::get('/genreConfiguration', function (){
+    return view('adminPages.genreConfigurations');
+})->name('genreConfig');
+
+Route::post('/addGenre', 'ConfigsController@addGenre');
+
+Route::get('/allMovies', 'VideosController@AllMovies');
+
+Route::get('movieDetails', 'VideosController@selectedMovieDetails');
+
+Route::post('addToCart', 'OrdersController@addToCart');
+
+Route::get('/order', 'OrdersController@processOrder');
+
+Route::post('/completeOrder', 'OrdersController@completeOrder');
 
 

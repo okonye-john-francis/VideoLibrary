@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigsTable extends Migration
+class CreateGenresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
-            $table->increments('config_id');
-            $table->string('config_key');
-            $table->decimal('config_value');
+        Schema::create('genres', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('category');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config');
+        Schema::dropIfExists('genre');
     }
 }

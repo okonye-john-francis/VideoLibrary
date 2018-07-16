@@ -1,6 +1,6 @@
-@extends('layouts.adminIndex')
+@extends('adminPages.configurationSettings')
 
-@section('content')
+@section('content2')
  
 
   <div class="col-xl-12">
@@ -25,29 +25,18 @@
         @endif
 
               <div class="card-body">
-                <form action="/add" method="post">
+                <form action="/addGenre" method="post">
+                  
                   @csrf
-                  <table style="width: 100%;">
 
-                      <tr>
-                          <td class="tdstyle">Configuration Key</td>
-                          <td>
-                              <div class="form-group"> 
-                  <select name="config_key" class="form-control">
-                    <option value="#">Select Configuration</option>
-                    <option value="std_movie_price">Standard Movie Price</option>
-                    <option value="rare_movie_price">Rare Movie Price</option>
-                  </select>
-                   </div>
-                          </td>
-                      </tr>
+                  <table style="width: 100%;">
                     
                       <tr>
-                          <td class="tdstyle">Configuration Value</td>
+                          <td class="tdstyle">Genre</td>
                           <td>
                               <div class="form-group"> 
-                  <input type="text" name="config_value" class="form-control" placeholder="e.g 10,000">
-                   </div>
+                                 <input type="text" name="category" class="form-control" placeholder="e.g Action or Adventure or Horror or Love Story etc">
+                              </div>
                           </td>
                       </tr>
                       <tr>
