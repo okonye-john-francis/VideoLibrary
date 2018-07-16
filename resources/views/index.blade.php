@@ -70,7 +70,7 @@ box left
 
 				<div class="file">
 					<a href="">					
-					<img src="{{URL::asset('images/cart2.png')}}" style="height: 28px;" />&nbsp&nbsp
+					<img src="{{URL::asset('images/ct.jpg')}}" style="height: 30px;" />&nbsp&nbsp
                     @guest
                     (0)
                     @else

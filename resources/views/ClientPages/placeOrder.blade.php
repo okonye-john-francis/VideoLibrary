@@ -2,17 +2,20 @@
 
 @section('content')
 
-            @if(count($errors)>0)
-            
-              @foreach($errors as $error)
-                 {{$error}}
-              @endforeach
-
-            @endif
+             @if(count($errors)>0)
+              
+                <div class="alert alert-danger" id ="notification" style="width: 90%; margin: auto; font-size: 14px;">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                          <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+              @endif
 			
 			@foreach($returned_value as $movie)
 
-				<div class="col-md-6">
+				<div class="col-md-6" style="margin-top: 15px;">
 					<a href="{{action('VideosController@selectedMovieDetails','movie='.$movie->id)}}"><img  src="{{URL::to($movie->video_image)}}" alt=""  style="height: 260px; width: 100%;" class="mgn" />
 					</a>
 			     <h5>Fill the form below to complete your Order</h5>

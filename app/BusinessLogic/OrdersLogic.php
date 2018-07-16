@@ -47,9 +47,9 @@ class OrdersLogic
  
         $this->validate($request,[
 
-           'contact'       => 'required',
-           'address'       => 'required',
-           'quantity'      => 'required'
+           'contact'               => 'required',
+           'address'               => 'required',
+           'number of copies'      => 'required'
 
         ]);
 
