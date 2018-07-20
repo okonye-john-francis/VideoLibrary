@@ -31,7 +31,7 @@
 						</div>
 					</div>
 					<div class="resent-grid-info recommended-grid-info video-info-grid">
-						<h5><a href="/movieDetails" class="title">{{$category->video_title}}</a></h5>
+						<h5><a href="{{action('VideosController@selectedMovieDetails','movie='.$category->id)}}" class="title">{{$category->video_title}}</a></h5>
 						
 					</div>
 				</div>
