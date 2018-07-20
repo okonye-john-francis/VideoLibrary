@@ -46,18 +46,16 @@
 							@endif
 							<tr>
 								<td valign="top" style="width: 40%;">
-									<form method="POST" action="/addToCart">
-									@csrf
-                                   	
-                                   <input type="hidden" id="video" value="{{$movie->id}}" name="vId" />
-                                   <input type="hidden" id="video" value="{{Auth::user()->id}}" name="activeUser" /> 
-                                   <div class="signin">
-                                   <input type="submit" class="play-icon popup-with-zoom-anim" id="cart" value = "Add to Cart"/>
-                                   </div>
-                                   </form>
+									
+                                <div class="signin">
+                                 
+                                   <a href="/addToCart?vId={{$movie->id}}" class="play-icon popup-with-zoom-anim">Add to Cart</a>
+                                 </div>
+                                  </div>
+                                
 								</td>
 								<td>
-                                   <div class="signin"><a href="/order?vId={{$movie->id}}" class="play-icon popup-with-zoom-anim">Order Direct</a></div>
+                                   <div class="signin"><a href="/order?vId={{$movie->id}}&cat=1" class="play-icon popup-with-zoom-anim">Order Direct</a></div>
 								</td>
 							</tr>
 						</table>

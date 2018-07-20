@@ -38,6 +38,11 @@ window.scrollTo(0,1);
 	.mgn{
 		margin-bottom: 10px;
 	}
+	.center{
+        width: 150px;
+        margin: 40px auto;
+      
+    }
 box left
 </style>
 
@@ -60,8 +65,9 @@ box left
         <div id="navbar" class="navbar-collapse collapse">
 		
 			<div class="top-search">
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search...">
+				<form class="navbar-form navbar-right" method="POST" action="/search">
+					@csrf
+					<input type="text" class="form-control" placeholder="Search using movie title or actor" name="search_string" />
 					<input type="submit" value=" ">
 				</form>
 			</div>  
@@ -69,8 +75,8 @@ box left
 
 
 				<div class="file">
-					<a href="">					
-					<img src="{{URL::asset('images/ct.jpg')}}" style="height: 30px;" />&nbsp&nbsp
+					<a href="/cart">					
+					<img src="{{URL::asset('images/ct.jpg')}}" style="height: 25px;" />&nbsp&nbsp
                     @guest
                     (0)
                     @else
@@ -122,9 +128,8 @@ box left
 			
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
-					<li class="active"><a href="index.html" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-					<li><a href="shows.html" class="user-icon"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>Latest Videos</a></li>
-					<li><a href="history.html" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Categories</a></li>
+					<li class="active"><a href="/" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+					<li><a href="#" class="user-icon"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>Latest Videos</a></li>
 					
 					<div class="side-bottom">
 						
@@ -134,6 +139,13 @@ box left
 					</div>
 				</div>
         </div>
+
+            @if($message = Session::get('success'))
+            
+            <script type="text/javascript">alert("{{$message}}")</script>
+
+            @endif
+
 
 
            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -206,6 +218,21 @@ box left
             
     	});
 
+    	
+    </script>
+
+    <script type="text/javascript">
+
+    	$('#qty').on('mouseout', function(){
+    		
+    		var unitPrice = document.getElementById('unit_price').value;
+    		var quantity = document.getElementById('qty').value;
+
+    		document.getElementById('before_qty_change').style.display = "none";
+
+    		document.getElementById('after_qty_change').innerHTML = (quantity*unitPrice);
+            
+    	});
     	
     </script>
 

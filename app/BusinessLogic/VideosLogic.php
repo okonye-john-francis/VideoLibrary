@@ -81,9 +81,17 @@ class VideosLogic
 
     public function clientHomePageDisplay(){
 
-        $latest_movies = Video::all()->toArray();
+          //$all_movies2 = Video::all();
+          $all_movies = DB::table('videos')
+                          ->join('genres', 'genres.id', '=', 'videos.video_genre')
+                          ->select('videos.*','genres.category')
+                          ->get();
+
+          $category = $all_movies->groupBy('video_genre')->toArray();
+
 
         if (!empty(Auth::user()->id)) {
+
           $cart  = Shopping_cart::all()
                                  ->where('booked_by','=', Auth::user()->id)
                                  ->count();
@@ -91,18 +99,10 @@ class VideosLogic
           $cart  = 0;
         }
         
-        
-                          //Video::groupBy('video_genre')
-                                  //->get();
-                          // Video::selectRaw('count(*) AS cnt, video_genre')
-                          // ->groupBy('video_genre')
-                          // ->orderBy('cnt', 'DESC')
-                          // ->limit(4)
-                          // ->get();
 
         return [ 
-            'movies' => $latest_movies,  
-            'cart'   => $cart               
+            'movies'           => $category,  
+            'cart'             => $cart           
         ];
 
     }
@@ -114,7 +114,7 @@ class VideosLogic
          $all_movies = DB::table('configs')
                           ->join('videos', 'configs.id', '=', 'videos.config_category')
                           ->join('genres', 'genres.id', '=', 'videos.video_genre')
-                          ->select('configs.*', 'videos.*','genres.*')
+                          ->select('configs.config_value', 'videos.*','genres.category')
                           ->get();
 
         return [ 
@@ -179,8 +179,63 @@ class VideosLogic
          return $movie_details;
 
     }
+  
+
+   public function deleteMovie($id){
+
+      $selected_movie = Video::find($id);
+
+      $selected_movie->delete();
+
+      return [
+
+        'deleted_movie' => $selected_movie,
+        'success'       => true,
+        'err_msg'       => null
+
+      ];
+
+   }
+
+   public function retriveSearchResults($search_string){
+
+         $results  =  DB::table('videos')
+                          ->where('video_title', 'like', '%' . $search_string . '%')
+                          ->orwhere('video_actor', 'like', '%' . $search_string . '%')
+                          ->join('configs', 'configs.id', '=', 'videos.config_category')
+                          ->join('genres', 'genres.id', '=', 'videos.video_genre')
+                          ->select('configs.config_value', 'videos.*','genres.category')
+                          ->get(); 
+
+         $total_results_found = $results->count();
+
+        return [
+
+          'results'             => $results,
+          'total_results_found' => $total_results_found,
+          'success'             => true,
+          'err_msg'             => null
+ 
+        ];
+
+   }
 
 
+   public function deleteSelectedMovie($id){
+
+        $selected_movie_record = Video::find($id);
+
+        $result = $selected_movie_record->delete();
+
+        return [
+
+          'result'    =>  $result,
+          'success'   =>  true,
+          'err_msg'   =>  null
+
+        ];
+
+   }
 
     
 }

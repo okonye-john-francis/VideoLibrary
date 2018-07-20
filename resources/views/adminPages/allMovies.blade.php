@@ -6,6 +6,15 @@
   <div class="col-xl-12">
      <div class="card">
         <br><br>
+
+             @if($status)
+
+                <div class="alert alert-success" id ="notification">
+                        {{$status}}
+                </div><br><br>
+
+              @endif
+
         
           <table width="100%" class="table table-striped table-bordered able-hover" id="dataTables-example">
               <thead>
@@ -31,7 +40,12 @@
                               Edit
                             </button>
                           </a>
-                          <button type="button" class="btn btn-outline-danger">Delete</button>
+                          
+                          <a onclick="return confirm('Are you sure you Want to delete this Movie?')" href="/deleteMovie?movie={{$row->id}}">
+                            <button type="button" class="btn btn-outline-danger">Delete</button>
+                              
+                          </a>
+                  
                         </td>
                     </tr>
                       @endforeach

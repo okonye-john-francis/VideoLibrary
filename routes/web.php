@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'VideosController@guestHomeDisplay');
+Route::get('/', 'VideosController@guestHomeDisplay')->name('client');
 
 Auth::routes();
 
@@ -21,32 +21,48 @@ Route::resource('movies','VideosController');
 
 Route::resource('configurations', 'ConfigsController');
 
-Route::post('/priceConfiguration', function (){
-    return view('adminPages.priceConfigurations');
-});
+Route::post('/priceConfiguration', 'ConfigsController@priceConfig')->name('priceConfig');
 
-Route::get('/priceConfiguration', function (){
-    return view('adminPages.priceConfigurations');
-})->name('priceConfig');
+Route::get('/priceConfiguration', 'ConfigsController@priceConfig')->name('priceConfig');
 
-Route::post('/genreConfiguration', function (){
-    return view('adminPages.genreConfigurations');
-});
+Route::post('/genreConfiguration', 'ConfigsController@genreConfig')->name('genreConfig');
 
-Route::get('/genreConfiguration', function (){
-    return view('adminPages.genreConfigurations');
-})->name('genreConfig');
+Route::get('/genreConfiguration', 'ConfigsController@genreConfig')->name('genreConfig');
 
 Route::post('/addGenre', 'ConfigsController@addGenre');
 
 Route::get('/allMovies', 'VideosController@AllMovies');
 
+Route::get('/newOrders', 'OrdersController@newOrders');
+
 Route::get('movieDetails', 'VideosController@selectedMovieDetails');
 
-Route::post('addToCart', 'OrdersController@addToCart');
+Route::get('addToCart', 'OrdersController@addToCart')->middleware('auth');
 
-Route::get('/order', 'OrdersController@processOrder');
+Route::get('addToCart', 'OrdersController@addToCart')->middleware('auth');
+
+Route::get('/order', 'OrdersController@processOrder')->middleware('auth');
 
 Route::post('/completeOrder', 'OrdersController@completeOrder');
+
+Route::get('/cart', 'OrdersController@ShoppingCartDetails')->middleware('auth');;
+
+Route::get('/deleteCart', 'OrdersController@deleteFromCart');
+
+Route::get('/oderApproval', 'OrdersController@oderApproval');
+
+Route::post('/orderAll', 'OrdersController@processOrder');
+
+Route::post('/search', 'VideosController@search');
+
+Route::get('/deleteMovie', 'VideosController@destroy');
+
+// Route::get('/test', 'VideosController@form');
+
+Route::get('/test2', 'VideosController@form2');
+
+// Route::post('/tests', 'VideosController@test');
+
+// Route::get('/tests2', 'VideosController@test');
 
 

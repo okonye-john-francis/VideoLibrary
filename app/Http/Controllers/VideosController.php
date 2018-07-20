@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BusinessLogic\VideosLogic;
+use App\Http\Controllers\OrdersController;
 use App\Video;
 
 class VideosController extends Controller
@@ -17,16 +18,9 @@ class VideosController extends Controller
     public function index()
     {
 
+        $status = null;
 
-        $current_configs        = $this->currentConfig();
-
-        $current_configurations = $current_configs['current_config'];
-
-        $all_movie_categories   = $current_configs['genre'];
-
-        return view('adminPages.addMovies',
-               compact('current_configurations','all_movie_categories')
-             );
+        return $this->showAddMoviePage($status);
 
     }
 
@@ -49,9 +43,19 @@ class VideosController extends Controller
     public function store(Request $request)
     {
         
-        $videoLogic             = new VideosLogic;
+        $videoLogic                 = new VideosLogic;
 
-        $returned_value         = $videoLogic->addMovie($request);
+        $returned_value             = $videoLogic->addMovie($request);
+
+        $status = "Movie Successfully Added";
+
+       return $this->showAddMoviePage($status);
+
+
+    }
+
+
+    private function showAddMoviePage($status){
 
         $current_configs        = $this->currentConfig();
 
@@ -59,11 +63,13 @@ class VideosController extends Controller
 
         $all_movie_categories   = $current_configs['genre'];
 
-        return view('adminPages.addMovies',
-                compact('current_configurations','all_movie_categories'))
-               ->with('success', 'Movie Successfully Added');
+        $orders_cont                = new OrdersController;
 
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
 
+        return view('adminPages.addMovies', compact('current_configurations', 
+            'all_movie_categories','number_of_pending_orders', 'status')
+             );
 
     }
 
@@ -96,9 +102,10 @@ class VideosController extends Controller
      */
     public function edit($id)
     {
+
         $videoLogic = new VideosLogic;
 
-        $returned_value = $videoLogic->findSelectedRecord(Video::find($id));
+        $returned_value = Video::find($id);
 
         $returned_value2 = $this->currentConfig();
 
@@ -106,9 +113,14 @@ class VideosController extends Controller
 
         $all_movie_categories   = $returned_value2['genre'];
 
-        return view('adminPages.editMovies', 
-               compact('all_movie_categories', 'current_configurations','returned_value')
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return view('adminPages.editMovies', compact('all_movie_categories', 
+            'current_configurations', 'returned_value', 'number_of_pending_orders')
             );
+
     }
 
     /**
@@ -124,7 +136,9 @@ class VideosController extends Controller
 
         $videoLogic->updateSelectedMovie($request,$id);
 
-        return $this->AllMovies();
+        $status = "Movie Successfully Updated";
+
+        return $this-> returnAllMovies($status);
 
     }
 
@@ -134,10 +148,62 @@ class VideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+
+        $videoLogic = new VideosLogic;
+
+        $video_id  = $request->movie;
+
+        $videoLogic->deleteSelectedMovie($video_id);
+
+        $status = "Movie Successfully Deleted";
+
+        return $this-> returnAllMovies($status);
+
+
     }
+  
+
+    public function test(Request $request){
+              dd($request->All());
+    }
+    
+    public function form(){
+ 
+
+        $video_logic = new VideosLogic;
+
+        $returned_value = $video_logic->displayAllMovies();
+
+        $all_movies = $returned_value['all_movies'];
+
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return view('adminPages.test', compact('all_movies', 'number_of_pending_orders')
+               );
+    }
+
+
+  public function form2(){
+ 
+
+        $video_logic = new VideosLogic;
+
+        $returned_value = $video_logic->displayAllMovies();
+
+        $all_movies = $returned_value['all_movies'];
+
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return view('adminPages.test2', compact('all_movies', 'number_of_pending_orders')
+               );
+    }
+
 
 
     public function guestHomeDisplay(){
@@ -151,6 +217,8 @@ class VideosController extends Controller
 
        $current_cart   = $returned_value['cart'];
 
+       //dd($current_movies);
+
        //$all_genre = $returned_value['all_genre'];
 
        return view('ClientPages.home', 
@@ -159,6 +227,16 @@ class VideosController extends Controller
     }
 
     public function AllMovies(){
+ 
+        $status = null;
+
+        return $this-> returnAllMovies($status);      
+
+    }
+
+
+
+    private function returnAllMovies($status){
 
         $video_logic = new VideosLogic;
 
@@ -166,8 +244,11 @@ class VideosController extends Controller
 
         $all_movies = $returned_value['all_movies'];
 
-        return view('adminPages.AllMovies',
-               compact('all_movies')
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return view('adminPages.AllMovies', compact('all_movies', 'number_of_pending_orders','success','status')
                );
 
     }
@@ -188,4 +269,28 @@ class VideosController extends Controller
 
     }
 
+
+    public function search(Request $request){
+
+        $video_logic    = new VideosLogic;
+
+        $search_string  =  $request->search_string;
+
+        $returned_search_results = $video_logic->retriveSearchResults($search_string);
+
+        $search_results  = $returned_search_results['results'];
+
+        $returned_value2 = $video_logic->clientHomePageDisplay();
+
+        $current_cart   = $returned_value2['cart'];
+
+        $total_results_found = $returned_search_results['total_results_found'];
+
+        return view('ClientPages.searchResults', compact('search_results', 
+            'current_cart','total_results_found','search_string'));
+
+
+    }
+
+    
 }

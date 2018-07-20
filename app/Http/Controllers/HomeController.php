@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BusinessLogic\VideosLogic;
+use App\Http\Controllers\OrdersController;
 use Auth;
 
 class HomeController extends Controller
@@ -25,9 +26,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
-       if (Auth::User()->email == 'admin@admin.com') {
-           return view('adminPages.home');
+     
+        // if( user_has_saved_cart() ){
+        //   $arr = load_cart_data();
+        //   return $OrdersController->update_cart( $arr )
+        // }
+
+          $logged_in_user = Auth::User();
+
+
+       if ($logged_in_user->email == 'admin@admin.com') {
+
+           $orders_cont                = new OrdersController;
+
+           $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+           return view('adminPages.home', compact('number_of_pending_orders'));
+
+
        }
        else {
      

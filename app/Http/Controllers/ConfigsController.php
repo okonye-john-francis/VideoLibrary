@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BusinessLogic\ConfigurationsLogic;
+use App\Http\Controllers\OrdersController;
 
 
 class ConfigsController extends Controller
@@ -15,8 +16,16 @@ class ConfigsController extends Controller
      */
     public function index()
     {
-        return view('adminPages.configurationSettings');
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return view('adminPages.configurationSettings', 
+            compact('number_of_pending_orders')
+        );
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -37,11 +46,15 @@ class ConfigsController extends Controller
     public function store(Request $request)
     {
         
-        $config = new ConfigurationsLogic;
+        $config                     = new ConfigurationsLogic;
         
-        $returned_value = $config->addPriceConfiguration($request);
+        $returned_value             = $config->addPriceConfiguration($request);
 
-        return redirect()->route('priceConfig')
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+        return redirect()->route('priceConfig',$number_of_pending_orders)
                ->with('success', 'Price Configuration saved Successfully');
 
     }
@@ -93,12 +106,37 @@ class ConfigsController extends Controller
 
     public function addGenre(Request $request){
  
-        $config = new ConfigurationsLogic;
+        $config                     = new ConfigurationsLogic;
         
-        $returned_value = $config->addGenre($request);
+        $returned_value             = $config->addGenre($request);
+
+        $orders_cont                = new OrdersController;
+
+        $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
          
-        return redirect()->route('genreConfig')
+        return redirect()->route('genreConfig', $number_of_pending_orders)
                ->with('success', 'Genre Successfully Added');
+
+    }
+
+    public function priceConfig(){
+
+           $orders_cont                = new OrdersController;
+
+           $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+           return view('adminPages.priceConfigurations', compact('number_of_pending_orders'));
+
+    }
+
+
+     public function genreConfig(){
+
+           $orders_cont                = new OrdersController;
+
+           $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
+
+           return view('adminPages.genreConfigurations', compact('number_of_pending_orders'));
 
     }
 

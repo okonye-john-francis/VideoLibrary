@@ -43,6 +43,8 @@
             width: 90%;
             margin: auto;
         }
+        .highlight { background-color: Green; }
+        .highlight2 { background-color: Orange; }
     </style>
 
 </head>
@@ -101,7 +103,7 @@
                         <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i> Orders</a>
+                        <a href="/newOrders"><i class="fa fa-dashboard fa-fw"></i>Pending Orders ({{$number_of_pending_orders}})</a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{route('movies.index')}}"><i class="fa fa-dashboard fa-fw"></i> Add Movie</a>
@@ -112,6 +114,13 @@
                     <li class="list-group-item">
                         <a href="{{route('configurations.index')}}"><i class="fa fa-dashboard fa-fw"></i> Configuration Settings</a>
                     </li>
+
+                    <li class="list-group-item">
+                        <a href="/test2"><i class="fa fa-dashboard fa-fw"></i> Test2</a>
+                    </li>
+                   <!--  <li class="list-group-item">
+                        <a href="/jq"><i class="fa fa-dashboard fa-fw"></i> JQuery Magic</a>
+                    </li> -->
                    
                     
                     
@@ -154,49 +163,70 @@
 
 <!-- jQuery -->
 <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
-
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ URL::asset('vendor/popper/popper.min.js') }}"></script>
 <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-
 <!-- Metis Menu Plugin JavaScript -->
 <script src="{{ URL::asset('vendor/metisMenu/metisMenu.min.js') }}"></script>
-
-
 <!-- Custom Theme JavaScript -->
 <script src="{{ URL::asset('dist/js/sb-admin-2.js') }}"></script>
-
 <script src="{{ URL::asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ URL::asset('vendor/datatables-responsive/dataTables.responsive.js') }}"></script>
 
 <script type="text/javascript">
+
      $(document).ready(function () {
+
         $('#dataTables-example,#dataTables-example2').DataTable({
             responsive: true,
             drawCallback: function () {
                 $('#dataTables-example_wrapper .row:last-child').addClass('mb-1 align-items-baseline');
             }
         });
+
+
+        $('#delete').on('click', function(){
+        if (confirm("Are you sure you want to delete this movie?")) {
+            return true;
+        }
+        else{
+            return false;
+        }
     });
+
+
+        $("#dropdownID").on('change', function() {
+        if ($(this).val() == 'pricing'){
+            event.preventDefault();
+            document.getElementById('pricing-form').submit();
+                        
+        } else if($(this).val() == 'genre') {
+            event.preventDefault();
+            document.getElementById('genre-form').submit();
+        }
+    });
+
+
+         $('#all').on('click', function(){
+
+        if (this.checked) {
+
+            $(".cities").attr("checked",true);
+
+        }else{
+
+            $(".cities").attr("checked",false);
+
+        }
+        
+    });
+
+
+    });
+
+
 </script>
-
-<script type="text/javascript">
-
-
-$("#dropdownID").on('change', function() {
-    if ($(this).val() == 'pricing'){
-        event.preventDefault();
-        document.getElementById('pricing-form').submit();
-                    
-    } else if($(this).val() == 'genre') {
-        event.preventDefault();
-        document.getElementById('genre-form').submit();
-    }
-});
-
-</script>
-
 
 </body>
 

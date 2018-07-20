@@ -18,10 +18,11 @@
                 </div>
               @endif
 
-              @if($message = Session::get('success'))
+              @if($status)
                 <div class="alert alert-success" id ="notification">
-                        {{$message}}
+                        {{$status}}
                 </div>
+                <br>
               @endif
 
                 <div class="card-body">

@@ -5,6 +5,9 @@
     
                 <div class="card-header">{{ __('Login') }}</div>
 
+                Sample Admin Credentials: username = admin@admin.com password = admin2018<br>
+                Sample Client Credentials: username = client@client.com password = client2018
+                 <br><br>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf

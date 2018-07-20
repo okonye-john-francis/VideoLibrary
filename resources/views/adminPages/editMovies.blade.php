@@ -18,13 +18,8 @@
                 </div>
               @endif
 
-              @if($message = Session::get('success'))
-                <div class="alert alert-success" id ="notification">
-                        {{$message}}
-                </div>
-              @endif
-
                 <div class="card-body">
+
                   <form action="{{action('VideosController@update', $returned_value->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                       <input type="hidden" name="_method" value="PATCH">
@@ -45,15 +40,11 @@
                               <div class="form-group"> 
                                 <select name="video_genre" class="form-control">
                                   <option value="#">Select Movie Category</option>
-                                  <option value="Action">Action</option>
-                                  <option value="Adventure">Adventure</option>
-                                  <option value="Animation">Animation</option>
-                                  <option value="Horror">Horror</option>
-                                  <option value="Romance">Romance</option>
-                                  <option value="Thriller">Thriller</option>
-                                  <option value="Sport">Sport</option>
-                                  <option value="Fantasy">Fantasy</option>
-                                  <option value="History">History</option>
+                                  @foreach($all_movie_categories as $categories)
+                                    <option value="{{$categories->id}}">{{$categories->category}}
+                                    </option>
+                                  @endforeach
+                                  
                                 </select>
                               </div>
                             </td>
@@ -114,6 +105,7 @@
                             </td>
                         </tr>
                     </table>
+                  
                 </form>
               </div>           
 
