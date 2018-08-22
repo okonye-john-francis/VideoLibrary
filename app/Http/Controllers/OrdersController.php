@@ -86,7 +86,7 @@ class OrdersController extends Controller
     }
 
     public function addToCart(Request $request){
-        
+
         return $this->update_cart( $request);
 
     }
@@ -121,7 +121,7 @@ class OrdersController extends Controller
          $order_category = $request->cat;
 
         if ($order_category == 'cart') {
-            
+
             $cart = [
 
                 'vId'         => $request->vId,
@@ -129,7 +129,7 @@ class OrdersController extends Controller
                 'quantity'    => $request->quantity,
                 'catId'       => $request->catId
 
-            ];  
+            ];
 
             $cart_details = json_encode($cart);
 
@@ -141,7 +141,7 @@ class OrdersController extends Controller
 
         $current_cart   = $returned_value2['cart'];
 
-        return view('ClientPages.placeOrder', compact('returned_value','current_cart','order_category','cart_details')); 
+        return view('ClientPages.placeOrder', compact('returned_value','current_cart','order_category','cart_details'));
 
 
     }
@@ -173,7 +173,7 @@ class OrdersController extends Controller
         $video_logic      = new VideosLogic;
 
         $returned_value   = $ordersLogic->retrieveCartDetails();
- 
+
         $cart             = $returned_value['cart'];
 
         $returned_value2  = $video_logic->clientHomePageDisplay();
@@ -204,11 +204,11 @@ class OrdersController extends Controller
         $total_price      = $cart_details['total_price'];
 
         $current_cart     = $returned_value3['cart'];
- 
+
         $cart             = $returned_value2['cart'];
 
         return view('ClientPages.cart', compact('cart','current_cart','total_price'));
-       
+
 
     }
 
@@ -223,7 +223,7 @@ class OrdersController extends Controller
 
         $number_of_pending_orders   = $returned_value['orders_count'];
 
-        return view('adminPages.orders', 
+        return view('adminPages.orders',
             compact('pending_orders','number_of_pending_orders')
            );
 
@@ -242,11 +242,11 @@ class OrdersController extends Controller
         return $number_of_pending_orders;
     }
 
-    
+
     public function oderApproval(Request $request){
 
         $orders_logic   = new OrdersLogic;
- 
+
         $order_id       = $request->orderId;
 
         $returned_value = $orders_logic->markOrderAsCleared($order_id);
@@ -263,5 +263,24 @@ class OrdersController extends Controller
         return view('adminPages.jQ', compact('number_of_pending_orders'));
 
     }
+
+public function getAllApprovedOrders(){
+
+     $orders_logic             = new OrdersLogic;
+
+     $number_of_pending_orders     = $this->numberOfPendingOrders();
+
+     $returned_approved_orders = $orders_logic->processAllApprovedOrders();
+
+     $approved_orders          = $returned_approved_orders['approved_orders'];
+
+     $approved_orders_count    = $returned_approved_orders['approved_orders_count'];
+
+     return view('adminPages.reports',
+                 compact('approved_orders','approved_orders_count','number_of_pending_orders')
+               );
+
+}
+
 
 }

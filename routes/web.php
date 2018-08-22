@@ -61,8 +61,7 @@ Route::get('/deleteMovie', 'VideosController@destroy');
 
 Route::get('/test2', 'VideosController@form2');
 
-// Route::post('/tests', 'VideosController@test');
+Route::get('/reading', 'VideosController@reading');
 
 // Route::get('/tests2', 'VideosController@test');
-
-
+Route::get('/reports', 'OrdersController@getAllApprovedOrders');

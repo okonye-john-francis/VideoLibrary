@@ -149,10 +149,11 @@ box left
 
 
            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<div class="main-grids">
+				<div class="main-grids">
 
-			    @yield('content')
+				    @yield('content')
 
+				</div>
 			</div>		
 
 		<div class="clearfix"> </div>
@@ -212,7 +213,7 @@ box left
     	$('#order').on('mouseenter', function(){
     		
     		var unitPrice = document.getElementById('unitPrice').value;
-    		var quantity = document.getElementById('quantity').value;
+    		var quantity  = document.getElementById('quantity').value;
 
     		document.getElementById('price').value = (quantity*unitPrice);
             
@@ -223,15 +224,15 @@ box left
 
     <script type="text/javascript">
 
-    	$('#qty').on('mouseout', function(){
-    		
-    		var unitPrice = document.getElementById('unit_price').value;
-    		var quantity = document.getElementById('qty').value;
+    	$('.qtty').on('mouseout', function(){ alert($(this).text());
 
-    		document.getElementById('before_qty_change').style.display = "none";
+    		$(".before_qty_change", this).hide();	
+    		$(".after_qty_change", this).show();		
+    		var unitPrice = $('.unitPrice', this).value;
+    		var quantity  = $('.qtty', this).value;
 
-    		document.getElementById('after_qty_change').innerHTML = (quantity*unitPrice);
-            
+    		$('#after_qty_change', this).innerHTML = (quantity*unitPrice);
+
     	});
     	
     </script>

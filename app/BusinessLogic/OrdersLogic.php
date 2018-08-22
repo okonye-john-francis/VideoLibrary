@@ -17,14 +17,14 @@ class OrdersLogic
 {
 
     use ValidatesRequests;
-  
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-   
+
    public function saveSelectedProductToCart(/*object*/ $cart_details){
 
          $logged_in_user = Auth::user()->id;
@@ -46,11 +46,11 @@ class OrdersLogic
 
 
    public function saveOrder($request){
-        
+
         $order_type  =   $request->order_cat;
 
         $this->validateInputs($order_type, $request);
-        
+
         $order = $this->saveInputs($order_type, $request);
 
         return [
@@ -61,11 +61,11 @@ class OrdersLogic
 
 
     }
-  
+
     private function validateInputs($order_type, $request){
 
        if ($order_type == 'single') {
-            
+
             $validation_results = $this->validate($request,[
 
            'contact'       => 'required',
@@ -77,7 +77,7 @@ class OrdersLogic
         }
 
         if ($order_type == 'multiple') {
-            
+
             $validation_results = $this->validate($request,[
 
            'contact'       => 'required',
@@ -94,7 +94,7 @@ class OrdersLogic
     private function saveInputs($order_type, $request){
 
         if ($order_type == 'single') {
-            
+
             $order = Order::create([
 
            'video_ordered'     => $request->video_ordered,
@@ -111,18 +111,18 @@ class OrdersLogic
         }
 
         if ($order_type == 'multiple') {
-            
+
             $cart               = $request->cart;
             $cart_details       = json_decode($cart); //dd($cart_details);
             $videosInCart       = $cart_details->vId;
             $unitPricesInCart       = $cart_details->movie_price;
             $quantitiesInCart   = $cart_details->quantity;
-            $recordId           = $cart_details->catId; 
+            $recordId           = $cart_details->catId;
 
-            //loop through all movies in cart and save one at a time in the orders table    
+            //loop through all movies in cart and save one at a time in the orders table
 
-            for ($i=0; $i < sizeof($videosInCart) ; $i++) { 
-              
+            for ($i=0; $i < sizeof($videosInCart) ; $i++) {
+
                  $order = Order::create([
 
                  'video_ordered'     => $videosInCart[$i],
@@ -138,7 +138,7 @@ class OrdersLogic
             }
         //delete all records that have been ordered from shopping_cart table
 
-         for ($i=0; $i < sizeof($recordId) ; $i++) { 
+         for ($i=0; $i < sizeof($recordId) ; $i++) {
 
           $recordInCart  = Shopping_cart::find($recordId[$i]);
 
@@ -164,7 +164,7 @@ class OrdersLogic
       $total_price  = $cart_details->sum('config_value');
 
       return [
-       
+
        'cart'         => $cart_details,
        'total_price'  => $total_price
 
@@ -199,7 +199,7 @@ class OrdersLogic
       $orders_count = $new_orders->count();
 
       return [
-       
+
        'new_orders'   => $new_orders,
        'orders_count' => $orders_count
 
@@ -224,5 +224,24 @@ class OrdersLogic
 
     }
 
-    
+      public function processAllApprovedOrders(){
+
+            $approved_orders   = Order::where('status', '=', 'Approved')
+                                  ->join('videos', 'videos.id', '=', 'orders.video_ordered')
+                                  ->join('users', 'users.id', '=', 'orders.ordered_by')
+                                  ->select('orders.*', 'users.name as name', 'videos.video_title as video_title')
+                                  ->get();
+
+        $approved_orders_count = $approved_orders->count();
+
+        return [
+
+         'approved_orders'   => $approved_orders,
+         'approved_orders_count' => $approved_orders_count
+
+        ];
+
+      }
+
+
 }

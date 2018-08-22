@@ -42,12 +42,12 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $videoLogic                 = new VideosLogic;
 
-        $returned_value             = $videoLogic->addMovie($request);
+        $videoLogic      = new VideosLogic;
 
-        $status = "Movie Successfully Added";
+        $returned_value  = $videoLogic->addMovie($request);
+
+        $status          = "Movie Successfully Added";
 
        return $this->showAddMoviePage($status);
 
@@ -57,17 +57,17 @@ class VideosController extends Controller
 
     private function showAddMoviePage($status){
 
-        $current_configs        = $this->currentConfig();
+        $current_configs            = $this->currentConfig();
 
-        $current_configurations = $current_configs['current_config'];
+        $current_configurations     = $current_configs['current_config'];
 
-        $all_movie_categories   = $current_configs['genre'];
+        $all_movie_categories       = $current_configs['genre'];
 
         $orders_cont                = new OrdersController;
 
         $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
 
-        return view('adminPages.addMovies', compact('current_configurations', 
+        return view('adminPages.addMovies', compact('current_configurations',
             'all_movie_categories','number_of_pending_orders', 'status')
              );
 
@@ -117,7 +117,7 @@ class VideosController extends Controller
 
         $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
 
-        return view('adminPages.editMovies', compact('all_movie_categories', 
+        return view('adminPages.editMovies', compact('all_movie_categories',
             'current_configurations', 'returned_value', 'number_of_pending_orders')
             );
 
@@ -163,14 +163,14 @@ class VideosController extends Controller
 
 
     }
-  
+
 
     public function test(Request $request){
               dd($request->All());
     }
-    
+
     public function form(){
- 
+
 
         $video_logic = new VideosLogic;
 
@@ -188,7 +188,7 @@ class VideosController extends Controller
 
 
   public function form2(){
- 
+
 
         $video_logic = new VideosLogic;
 
@@ -208,8 +208,8 @@ class VideosController extends Controller
 
     public function guestHomeDisplay(){
 
-     
-       $video_logic = new VideosLogic;
+
+       $video_logic    = new VideosLogic;
 
        $returned_value = $video_logic->clientHomePageDisplay();
 
@@ -221,16 +221,16 @@ class VideosController extends Controller
 
        //$all_genre = $returned_value['all_genre'];
 
-       return view('ClientPages.home', 
+       return view('ClientPages.home',
               compact('current_movies','current_cart'));
 
     }
 
     public function AllMovies(){
- 
+
         $status = null;
 
-        return $this-> returnAllMovies($status);      
+        return $this-> returnAllMovies($status);
 
     }
 
@@ -248,7 +248,8 @@ class VideosController extends Controller
 
         $number_of_pending_orders   = $orders_cont->numberOfPendingOrders();
 
-        return view('adminPages.AllMovies', compact('all_movies', 'number_of_pending_orders','success','status')
+        return view('adminPages.AllMovies',
+               compact('all_movies', 'number_of_pending_orders','success','status')
                );
 
     }
@@ -286,11 +287,19 @@ class VideosController extends Controller
 
         $total_results_found = $returned_search_results['total_results_found'];
 
-        return view('ClientPages.searchResults', compact('search_results', 
-            'current_cart','total_results_found','search_string'));
+        return view('ClientPages.searchResults',
+            compact('search_results', 'current_cart','total_results_found','search_string'));
 
 
     }
 
-    
+
+    public function getReports(){
+
+
+
+      
+    }
+
+
 }

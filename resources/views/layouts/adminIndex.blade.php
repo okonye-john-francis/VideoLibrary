@@ -65,7 +65,7 @@
         </div>
 
         <ul class="nav navbar-nav ml-md-auto flex-row navbar-top-links">
-        
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="true" aria-expanded="false">
@@ -116,16 +116,14 @@
                     </li>
 
                     <li class="list-group-item">
-                        <a href="/test2"><i class="fa fa-dashboard fa-fw"></i> Test2</a>
+                        <a href="/reports"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
                     </li>
-                   <!--  <li class="list-group-item">
-                        <a href="/jq"><i class="fa fa-dashboard fa-fw"></i> JQuery Magic</a>
-                    </li> -->
-                   
-                    
-                    
-                   
-                    
+
+
+
+
+
+
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
@@ -138,22 +136,22 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-         
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
 
-              
+
                         @yield('content')
 
 
-                        
-                        </div> 
-                   </div> 
+
+                        </div>
+                   </div>
 
                </div>
             <!-- /.row -->
-            
+
            </div>
         <!-- /#page-wrapper -->
     </div>
@@ -200,7 +198,7 @@
         if ($(this).val() == 'pricing'){
             event.preventDefault();
             document.getElementById('pricing-form').submit();
-                        
+
         } else if($(this).val() == 'genre') {
             event.preventDefault();
             document.getElementById('genre-form').submit();
@@ -219,7 +217,7 @@
             $(".cities").attr("checked",false);
 
         }
-        
+
     });
 
 

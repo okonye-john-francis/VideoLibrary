@@ -34,16 +34,17 @@
 		      <td><img src="{{URL::to($cartdetails['video_image'])}}" style="height: 35px; width: 40px;" />
 		      </td>
 		      <td id="price">
-		      	<div id="before_qty_change">
+		      	<div class="before_qty_change">
 		      	{{$cartdetails['config_value']}}
+		      	<input type="hidden" class="unitPrice" value="{{$cartdetails['config_value']}}" />
 		        </div>
-		      	<div id="after_qty_change" ></div>
-		      	<input type="hidden" name="movie_price[]" id="unit_price" value="{{$cartdetails['config_value']}}" />
+		      	<div class="after_qty_change" ></div>
+		      	<input type="hidden" name="movie_price[]" value="{{$cartdetails['config_value']}}" />
 		      
 		      </td>
 		      <td>
 
-		      	<input type="text" name="quantity[]" value="1" id="{{'qty'.$cartdetails['config_value']}}" style="width: 60px;" />
+		      	<input type="text" name="quantity[]" value="1" class="qtty" style="width: 60px;" />
 		      </td>
 		      <td>
                 <a onclick="return confirm('Are you sure you want to delete this Movie from Cart?')"  href="/deleteCart?vId={{$cartdetails['cartId']}}">

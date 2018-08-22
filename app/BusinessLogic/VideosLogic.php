@@ -16,7 +16,7 @@ class VideosLogic
 {
 
     use ValidatesRequests;
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +45,7 @@ class VideosLogic
 
 
     public function addMovie($request){
- 
+
         $this->validate($request,[
 
            'video_title'       => 'required',
@@ -98,11 +98,11 @@ class VideosLogic
         }else{
           $cart  = 0;
         }
-        
 
-        return [ 
-            'movies'           => $category,  
-            'cart'             => $cart           
+
+        return [
+            'movies'           => $category,
+            'cart'             => $cart
         ];
 
     }
@@ -117,15 +117,15 @@ class VideosLogic
                           ->select('configs.config_value', 'videos.*','genres.category')
                           ->get();
 
-        return [ 
-            'all_movies' => $all_movies                    
+        return [
+            'all_movies' => $all_movies
         ];
 
     }
 
     public function findSelectedRecord($selected_record){
 
-         return $selected_record; 
+         return $selected_record;
 
     }
 
@@ -179,7 +179,7 @@ class VideosLogic
          return $movie_details;
 
     }
-  
+
 
    public function deleteMovie($id){
 
@@ -205,7 +205,7 @@ class VideosLogic
                           ->join('configs', 'configs.id', '=', 'videos.config_category')
                           ->join('genres', 'genres.id', '=', 'videos.video_genre')
                           ->select('configs.config_value', 'videos.*','genres.category')
-                          ->get(); 
+                          ->get();
 
          $total_results_found = $results->count();
 
@@ -215,7 +215,7 @@ class VideosLogic
           'total_results_found' => $total_results_found,
           'success'             => true,
           'err_msg'             => null
- 
+
         ];
 
    }
@@ -237,5 +237,14 @@ class VideosLogic
 
    }
 
-    
+   public function processReports(){
+
+     
+
+
+
+
+   }
+
+
 }
